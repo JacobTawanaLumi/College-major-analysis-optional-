@@ -1,0 +1,55 @@
+---
+title: "College Major analysis"
+author: "Lumi"
+date: "01/02/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The aim of this assignment is to study how income varies across college major categories. Specifically to answer the question: “Is there an association between college major category and income?”
+
+
+
+Documentation of assignment
+
+Read the data table and store them in a variable:
+
+```{r}
+college_data <- read.csv("https://query.data.world/s/uieteyrze67twkiujwxffsokaml44y", header=TRUE, stringsAsFactors=FALSE);
+```
+
+First we view the data with:
+
+```{r}
+head(college_data)
+summary(college_data)
+```
+## Analysis
+
+The first columns contains major codes and this will be ignored, while the second columns is the name of majors. I will use the major category in order to determine my regression analysis. First let us determine the distribution of graduate income
+
+```{r}
+as.numeric(college_data$Median)
+```
+```{r}
+hist(college_data$Median,xlab="Median Income($)")
+```
+
+Set the median to a numeric variable and majot category to a factor
+
+```{r}
+Income_median<-as.numeric(college_data$Median)
+major_category<-as.factor(college_data$Major_category)
+```
+and do the analysis
+
+```{r}
+fit_regr<- lm(Income_median~major_category)
+summary(fit_regr)
+```
+## Conlcusion
+
+There seems to be a significant relationship between the college major and graduate income with a R squared of 0.5717. Though the multivariate analysis (including other variables) might yield a different result.
